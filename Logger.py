@@ -1,5 +1,13 @@
 import logging
 
+class LoggerConfig:
+    def __init__(self, filename, format):
+        self.filename = filename
+        self.format = format
+
+    def configure(self):
+        logging.basicConfig(filename=self.filename, format=self.format, level=logging.DEBUG, filemode='w')
+
 class Logger:
     def __init__(self, log_file):
         self.log_file = log_file
