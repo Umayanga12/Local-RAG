@@ -1,5 +1,6 @@
 import re
 from Logger import  LoggerConfig,Logger
+from langchain_community.document_loaders import WebBaseLoader
 
 configDocLoadLogger = LoggerConfig('Logs/Doc_Loading/DocumentLoader.log', '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 configDocLoadLogger.configure()
@@ -35,7 +36,6 @@ class DocumentLoader(ResourceType):
     def load(self):
         try:
             if self.isWebBased():
-                from langchain_community.document_loaders import WebBaseLoader
                 loader = WebBaseLoader(self.path)
                 data = loader.load()
                 return data
