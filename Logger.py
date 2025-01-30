@@ -1,6 +1,9 @@
 import logging
 
 class LoggerConfig:
+    """
+    Logger configuration class
+    """
     def __init__(self, filename, format):
         self.filename = filename
         self.format = format
@@ -9,6 +12,9 @@ class LoggerConfig:
         logging.basicConfig(filename=self.filename, format=self.format, level=logging.DEBUG, filemode='w')
 
 class Logger:
+    """
+    Event logger class
+    """
     def __init__(self, log_file):
         self.log_file = log_file
         self.logger = logging.getLogger('RAG')
@@ -20,13 +26,13 @@ class Logger:
         self.logger.addHandler(self.handler)
 
     def debug(self, message):
-        self.logger.info(message)
+        self.logger.debug(message)
 
     def info(self, message):
-        self.logger.error(message)
+        self.logger.info(message)
 
     def error(self, message):
-        self.logger.debug(message)
+        self.logger.error(message)
 
     def warning(self, message):
         self.logger.warning(message)

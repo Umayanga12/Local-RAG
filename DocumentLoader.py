@@ -1,6 +1,15 @@
 import re
+from Logger import  LoggerConfig,Logger
+
+configDocLoadLogger = LoggerConfig('Logs/Doc_Loading/DocumentLoader.log', '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+configDocLoadLogger.configure()
+
+DocLoaderLogger = Logger('Logs/Doc_Loading/DocumentLoader.log')
 
 class ResourceType:
+    """
+    Chech whether the given resource is a web based resource or a local file
+    """
     def __init__(self, ResourcePath):
         self.resource = ResourcePath
 
@@ -17,9 +26,22 @@ class ResourceType:
 
 
 class DocumentLoader(ResourceType):
+    """
+    Load the document from the given resource
+    """
     def __init__(self, path):
         self.path = path
 
     def load(self):
-        with open(self.path, 'r') as file:
-            return file.read()
+        try:
+            if self.isWebBased():
+                from langchain_community.document_loaders import WebBaseLoader
+                loader = WebBaseLoader(self.path)
+                data = loader.load()
+                return data
+            else:
+                with open(self.path, 'r') as file:
+                    return file.read()
+        except Exception as e:
+            DocLoaderLogger.error(f"Error in loading the document: {e}")
+            return None
