@@ -15,9 +15,15 @@ class TextSplitter:
         all_splits = text_splitter.split_documents(data)
         return all_splits
 
-class Embedder:
-    def __init__(self,model,dataSplits,embeddingModel):
-        pass
+class VectorStore:
+    def __init__(self,emdmodel,dataSplits,embeddingModel):
+        self.dataSplits = dataSplits
+        self.embeddingModel = embeddingModel
+        self.emdmodel = emdmodel
 
     def DocEmbedder(self):
-        pass
+        local_embeddings = OllamaEmbeddings(model=self.emdmodel)
+        VecotorStore = Chroma.from_documents(
+            documents=self.dataSplits,
+            embedding=local_embeddings
+        )
