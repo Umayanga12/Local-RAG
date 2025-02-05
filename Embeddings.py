@@ -16,6 +16,9 @@ class TextSplitter:
         return all_splits
 
 class VectorStore:
+    """
+    Initiating Vector store
+    """
     def __init__(self,emdmodel,dataSplits,embeddingModel):
         self.dataSplits = dataSplits
         self.embeddingModel = embeddingModel
@@ -27,3 +30,4 @@ class VectorStore:
             documents=self.dataSplits,
             embedding=local_embeddings
         )
+        return VecotorStore
